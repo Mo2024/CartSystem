@@ -1,8 +1,10 @@
 /* GLOBAL */
-img, .carouselColor{
+img{
   border-radius: 1rem;
 }
-
+.dropdown-menu:hover{
+  display: block;
+}
 /* NAV BAR */
 .btn{
   outline: none !important;
@@ -17,6 +19,7 @@ img, .carouselColor{
   background-color: #282d32 !important;
   color: #ffc107 !important;
 }
+
 /* MAIN PAGE */
 .carouselColor{
   padding: 1rem 0 1rem 0;
@@ -26,13 +29,13 @@ img, .carouselColor{
   border: 0.3rem solid #ffc107 !important;
 
 }
-.carousel{
+/* .carousel{
   margin: auto;
-  width: 85%;
-}
+  width: 65%;
+} */
 
 @media (max-width: 767px) { 
-  .carousel{
+  .carouselColor{
     display: none;
   }
 }
