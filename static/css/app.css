@@ -1,3 +1,8 @@
+/* GLOBAL */
+img, .carouselColor{
+  border-radius: 1rem;
+}
+
 /* NAV BAR */
 .btn{
   outline: none !important;
@@ -11,6 +16,25 @@
 .login:hover{
   background-color: #282d32 !important;
   color: #ffc107 !important;
+}
+/* MAIN PAGE */
+.carouselColor{
+  padding: 1rem 0 1rem 0;
+  background-color: #c91112;
+}
+.carousel img{
+  border: 0.3rem solid #ffc107 !important;
+
+}
+.carousel{
+  margin: auto;
+  width: 85%;
+}
+
+@media (max-width: 767px) { 
+  .carousel{
+    display: none;
+  }
 }
 
 /* FOOTER */
