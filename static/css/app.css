@@ -2,9 +2,7 @@
 img{
   border-radius: 1rem;
 }
-.dropdown-menu:hover{
-  display: block;
-}
+
 /* NAV BAR */
 .btn{
   outline: none !important;
