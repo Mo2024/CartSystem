@@ -1,33 +1,9 @@
 const express = require("express");
 const mysql = require('mysql')
 
-// Create Connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '12345678',
-    database: 'my_db',
-    port: '3000'
-});
-
-// Connect
-db.connect((err) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log('MySql Connected')
-});
 
 const app = express();
 const path = require("path");
-
-//Create DB
-app.get('/createdb', (req, res) => {
-    let sql = 'CREATE DATABASE my_db'
-    db.query(sql, (err, result) => {
-
-    });
-});
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
@@ -36,6 +12,59 @@ app.use(express.static(path.join(__dirname, '/static')))
 app.get('/', (req, res) => {
     res.render('home.ejs')
 })
+
+// Create Connection
+var db = mysql.createConnection({
+    host: 'localhost',
+    user: 'momo',
+    password: 'Naba1996%',
+    database: 'sampledb1',
+    port: '3000'
+});
+
+// Connect
+// db.connect((err) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('MySql Connected');
+//     }
+// });
+
+db.connect((err) => {
+    if (err) {
+        throw err;
+    }
+    console.log('MySql Connected');
+
+});
+
+
+// Create DB
+// app.get('/createdb', (req, res) => {
+//     let sql = 'CREATE DATABASE sampledb1'
+//     db.query(sql, (err, result) => {
+//         if (err) {
+//             console.log(err);
+//         }
+//         else {
+//             console.log(result)
+//             res.send('Database Created');
+//         }
+
+
+//     });
+// });
+app.get('/createdb', (req, res) => {
+    let sql = 'CREATE DATABASE sampledb1'
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.send('Database Created');
+
+
+    });
+});
 
 app.listen(3000, () => {
 
