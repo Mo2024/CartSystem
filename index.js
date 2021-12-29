@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql2 = require('mysql2')
+const mysql = require('mysql2')
 
 
 const app = express();
@@ -9,18 +9,21 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.join(__dirname, '/static')))
 
-var db = mysql2.createConnection({
+var db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "Naba1996%",
     database: "sampledb"
 });
 
-db.connect();
-var result = db.query('SELECT * FROM menudropdown', (err, rows, fields) => {
+db.connect(function (err) {
     if (err) throw err;
-    console.log(rows[0].menudropdown);
-})
+    db.query("SELECT * FROM menudropdown", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
+});
+
 
 app.get('/', (req, res) => {
     res.render('home.ejs')
