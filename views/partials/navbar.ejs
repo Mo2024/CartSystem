@@ -23,9 +23,9 @@
                     <a class="dropdown-item" href="#">Menu</a>
                     <div class="dropdown-divider border-dark"></div>
                     <!-- DROPRIGHT START -->
-                    <% for (var i = 0; i < results.length; i++) { %>
                     <% let idnum = 'dropRight'; %>
-
+                    <% for (var i = 0; i < results.length; i++) { %>
+                    <% if(results[i].numberOfDropright>0) {%>
                     <div class="btn-group dropright" onmouseover="displayDropDown('<%=idnum+i%>')"
                         onmouseout="hideDropDown('<%=idnum+i%>')">
                         <button type="button" class="btn dropdown-item dropdown-toggle" data-toggle="dropdown"
@@ -33,11 +33,18 @@
                             <%= results[i].sectionName %>
                         </button>
                         <!-- SUB DROPRIGHT -->
+
                         <div class="dropdown-menu bg-warning" id="<%=idnum+i%>">
+                            <% for (var j = 0; j < results[i].numberOfDropright; j++) { %>
                             <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <% } %>
                         </div>
+
                     </div>
+                    <% } else { %>
+                    <a class="dropdown-item" href="#"> <%= results[i].sectionName %></a>
+                    <% } %>
+
                     <% } %>
 
                     <!-- DROPDOWN END -->
