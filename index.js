@@ -24,6 +24,10 @@ app.get('/', async (req, res) => {
     res.render('home.ejs', { results });
 });
 
+app.get('/login', async (req, res) => {
+    res.render('login.ejs');
+});
+
 
 app.listen(3000, () => {
 
