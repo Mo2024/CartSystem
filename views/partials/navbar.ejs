@@ -21,7 +21,10 @@
                 </a>
                 <div class="dropdown-menu bg-warning" id="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Menu</a>
+                    <% if(results.length>0) {%>
                     <div class="dropdown-divider border-dark"></div>
+                    <% } %>
+
                     <!-- DROPRIGHT START -->
                     <% let idnum = 'dropRight'; %>
                     <% for (var i = 0; i < results.length; i++) { %>
@@ -33,13 +36,11 @@
                             <%= results[i].sectionName %>
                         </button>
                         <!-- SUB DROPRIGHT -->
-
                         <div class="dropdown-menu bg-warning" id="<%=idnum+i%>">
-                            <% for (var j = 0; j < results[i].numberOfDropright; j++) { %>
-                            <a class="dropdown-item" href="#">Action</a>
+                            <% for (var j = 0; j < results[i].droprightOfDropdown.length; j++) { %>
+                            <a class="dropdown-item" href="#"><%= results[i].droprightOfDropdown[j] %> </a>
                             <% } %>
                         </div>
-
                     </div>
                     <% } else { %>
                     <a class="dropdown-item" href="#"> <%= results[i].sectionName %></a>

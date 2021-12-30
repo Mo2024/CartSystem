@@ -16,20 +16,11 @@ var db = mysql.createConnection({
     database: "sampledb"
 });
 
-// db.connect(function (err) {
-//     if (err) throw err;
-//     console.log('Mysql Connected');
-//     db.query("SELECT * FROM menudropdown", function (err, result, fields) {
-//         if (err) throw err;
-//         console.log(result);
-//     });
-// });
-
 
 app.get('/', async (req, res) => {
     var results = await db.promise().query("SELECT * FROM menudropdown");
     results = results[0];
-    console.log(results);
+    await parseArray(results);
     res.render('home.ejs', { results });
 });
 
@@ -39,3 +30,10 @@ app.listen(3000, () => {
     console.log("Listening to port 3000")
 
 });
+function parseArray(results) {
+    for (var i = 0; i < results.length; i++) {
+        if (results[i].droprightOfDropdown != null) {
+            results[i].droprightOfDropdown = results[i].droprightOfDropdown.split(",");
+        }
+    }
+}
