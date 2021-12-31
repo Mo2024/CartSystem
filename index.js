@@ -27,6 +27,9 @@ app.get('/', async (req, res) => {
 app.get('/login', async (req, res) => {
     res.render('login.ejs');
 });
+app.get('/signup', async (req, res) => {
+    res.render('signup.ejs');
+});
 
 
 app.listen(3000, () => {
