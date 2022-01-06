@@ -37,15 +37,19 @@ img{
   border: 0.3rem solid #ffc107 !important;
 
 }
-/* .carousel{
-  margin: auto;
-  width: 65%;
-} */
 
 @media (max-width: 767px) { 
   .carouselColor{
     display: none;
   }
+}
+
+/* MENU UNDER CAROUSEL */
+.card {
+  min-width: 220px;
+  padding: 0rem !important;
+  margin: 0 10px 10px 10px;
+
 }
 
 /* FOOTER */
