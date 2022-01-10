@@ -2,7 +2,7 @@
 img{
   border-radius: 1rem;
 }
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
+/* .card-registration .select-input.form-control[readonly]:not([disabled]) {
   font-size: 1rem;
   line-height: 2.15;
   padding-left: .75em;
@@ -11,7 +11,7 @@ img{
 
 .card-registration .select-arrow {
   top: 13px;
-}
+} */
 
 /* NAV BAR */
 .btn{
@@ -27,7 +27,24 @@ img{
   background-color: #282d32 !important;
   color: #ffc107 !important;
 }
+/* MENU FOOD BOX */
+.foodImg{
+  /* border:  0.2rem solid black; */
+  /* border-radius: 1rem; */
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
+}
+.add2CartBtn{
+  color: #058E46;
+  border-color: #058E46;
+  transition: color 0.5s, background-color 0.5s;
 
+}
+.add2CartBtn:hover{
+  background-color: #058E46;
+  color: white;
+}
 /* MAIN PAGE */
 .carouselColor{
   padding: 1rem 0 1rem 0;
