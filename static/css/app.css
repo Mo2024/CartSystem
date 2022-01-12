@@ -29,11 +29,20 @@ img{
 }
 /* MENU FOOD BOX */
 .foodImg{
-  /* border:  0.2rem solid black; */
-  /* border-radius: 1rem; */
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
+  position:relative;
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-direction:column;
+  flex-direction:column;
+  min-width:0;
+  word-wrap:break-word;
+  background-color:#fff;
+  background-clip:border-box;
+  border:1px solid rgba(0,0,0,.125);
+  border-radius:.25rem
 }
 .add2CartBtn{
   color: #058E46;
@@ -44,6 +53,9 @@ img{
 .add2CartBtn:hover{
   background-color: #058E46;
   color: white;
+}
+.card:hover{
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 }
 /* MAIN PAGE */
 .carouselColor{
@@ -60,14 +72,6 @@ img{
     display: none;
   }
 }
-
-/* MENU UNDER CAROUSEL */
-/* .card { */
-  /* min-width: 220px; */
-  /* padding: 0rem !important; */
-  /* margin: 0rem 1rem 0; */
-
-/* } */
 
 /* FOOTER */
 .footer-dark {
@@ -161,6 +165,5 @@ img{
   }
 
 
-  /* KJHDSJKHXKJSHJKXSHJK */
   
  
