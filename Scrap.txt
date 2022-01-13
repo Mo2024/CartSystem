@@ -1,3 +1,13 @@
+// DB CREATION
+app.get('/createdb', (req, res) => {
+    let sql = 'CREATE DATABASE sampledb';
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.send("DATABASE CREATED");
+    });
+});
+
 // db.connect(function (err) {
 //     if (err) throw err;
 //     console.log('Mysql Connected');
@@ -106,3 +116,11 @@
 
         </div>
     </div>
+
+
+    INSERT INTO menudropdown(
+	sectionName,
+    numberOfDropright,
+    droprightOfDropdown
+)
+VALUES("Meals",4,"Beef Burgeers,Chicken Burgers,Wraps,Diet Options,Seafood,Kids Meal"),("Sandwiches",4,"Beef Burgeers,Chicken Burgers,Wraps,Seafood"),("Sides",0,null),("Drinks",4,"Special Juices,Freshness Juices,Mix Fruits Juices,Healthy Juices,Milkshakes"),("Ice Cream",0,null);

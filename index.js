@@ -9,18 +9,30 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.join(__dirname, '/static')))
 
-var db = mysql.createConnection({
+const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Naba1996%",
+    password: "123456",
     database: "sampledb"
 });
 
+db.connect((err) => {
+    if (err) {
+        throw err;
+    }
+    console.log("Mysql connected...")
+})
 
 app.get('/', async (req, res) => {
-    var results = await db.promise().query("SELECT * FROM menudropdown");
-    results = results[0];
-    await parseArray(results);
+    try {
+        var results = await db.promise().query("SELECT * FROM menudropdown");
+        results = results[0];
+        await parseArray(results);
+    }
+    catch (e) {
+        console.log(e);
+        results = 0
+    }
     res.render('home.ejs', { results });
 });
 
