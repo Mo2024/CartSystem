@@ -1,6 +1,9 @@
 // NAV BAR
 function displayDropDown(x) {
-    document.getElementById(x).style.display = "block";
+    var dropdownClass = document.getElementById("menuClassCheck")
+    if (dropdownClass.classList.contains("dropdown-toggle")) {
+        document.getElementById(x).style.display = "block";
+    }
 }
 function hideDropDown(x) {
     document.getElementById(x).style.display = "none";

@@ -15,10 +15,20 @@
             <!-- START -->
             <li class="nav-item dropdown" onmouseover="displayDropDown('dropdown-menu')"
                 onmouseout="hideDropDown('dropdown-menu')">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+
+                <% if (results.length!==0) {%>
+                <a id="menuClassCheck" class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown"
+                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Menu
                 </a>
+                <% } else{%>
+                <a id="menuClassCheck" class="nav-link text-dark" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+                </a>
+                <% } %>
+
+
                 <div class="dropdown-menu bg-warning" id="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Menu</a>
                     <% if(results.length>0) {%>
@@ -47,14 +57,13 @@
                     <% } %>
 
                     <% } %>
-
                     <!-- DROPDOWN END -->
                 </div>
 
             </li>
             <!-- END -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Cart</a>
+                <a class="nav-link text-dark" href="#">Cart</a>
             </li>
 
         </ul>
