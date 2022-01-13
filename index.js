@@ -1,18 +1,20 @@
 const express = require("express");
 const mysql = require('mysql2')
-const app = express();
 const path = require("path");
+const dotenv = require('dotenv');
+const app = express();
 
 
+dotenv.config({ path: './.env' })
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.join(__dirname, '/static')))
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "123456",
-    database: "sampledb"
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
 });
 
 db.connect((err) => {
