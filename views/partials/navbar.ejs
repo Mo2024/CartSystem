@@ -2,6 +2,7 @@
     <a class="navbar-brand" href="#">
         <img style="border-radius: 8px;" src="/icons/logo.webp" width="30" height="30" alt="" loading="lazy">
     </a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -16,7 +17,7 @@
             <li class="nav-item dropdown" onmouseover="displayDropDown('dropdown-menu')"
                 onmouseout="hideDropDown('dropdown-menu')">
 
-                <% if (results.length!==0 && results.length!==undefined) {%>
+                <% if (dropdownResults.length!==0 && dropdownResults.length!==undefined) {%>
                 <a id="menuClassCheck" class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown"
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Menu
@@ -31,29 +32,29 @@
 
                 <div class="dropdown-menu bg-warning" id="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Menu</a>
-                    <% if(results.length>0) {%>
+                    <% if(dropdownResults.length>0) {%>
                     <div class="dropdown-divider border-dark"></div>
                     <% } %>
 
                     <!-- DROPRIGHT START -->
                     <% let idnum = 'dropRight'; %>
-                    <% for (var i = 0; i < results.length; i++) { %>
-                    <% if(results[i].numberOfDropright>0) {%>
+                    <% for (var i = 0; i < dropdownResults.length; i++) { %>
+                    <% if(dropdownResults[i].numberOfDropright>0) {%>
                     <div class="btn-group dropright" onmouseover="displayDropDown('<%=idnum+i%>')"
                         onmouseout="hideDropDown('<%=idnum+i%>')">
                         <button type="button" class="btn dropdown-item dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            <%= results[i].sectionName %>
+                            <%= dropdownResults[i].sectionName %>
                         </button>
                         <!-- SUB DROPRIGHT -->
                         <div class="dropdown-menu bg-warning" id="<%=idnum+i%>">
-                            <% for (var j = 0; j < results[i].droprightOfDropdown.length; j++) { %>
-                            <a class="dropdown-item" href="#"><%= results[i].droprightOfDropdown[j] %> </a>
+                            <% for (var j = 0; j < dropdownResults[i].droprightOfDropdown.length; j++) { %>
+                            <a class="dropdown-item" href="#"><%= dropdownResults[i].droprightOfDropdown[j] %> </a>
                             <% } %>
                         </div>
                     </div>
                     <% } else { %>
-                    <a class="dropdown-item" href="#"> <%= results[i].sectionName %></a>
+                    <a class="dropdown-item" href="#"> <%= dropdownResults[i].sectionName %></a>
                     <% } %>
 
                     <% } %>

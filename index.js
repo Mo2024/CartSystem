@@ -1,9 +1,8 @@
 const express = require("express");
 const mysql = require('mysql2')
-
-
 const app = express();
 const path = require("path");
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
@@ -24,16 +23,10 @@ db.connect((err) => {
 })
 
 app.get('/', async (req, res) => {
-    try {
-        var results = await db.promise().query("SELECT * FROM menudropdown");
-        results = results[0];
-        await parseArray(results);
-    }
-    catch (e) {
-        console.log(e);
-        results = 0
-    }
-    res.render('home.ejs', { results });
+    let dropdownResults = await navBar();
+
+
+    res.render('home.ejs', { dropdownResults });
 });
 
 app.get('/login', async (req, res) => {
@@ -45,14 +38,26 @@ app.get('/signup', async (req, res) => {
 
 
 app.listen(3000, () => {
-
     console.log("Listening to port 3000")
 
 });
-function parseArray(results) {
-    for (var i = 0; i < results.length; i++) {
-        if (results[i].droprightOfDropdown != null) {
-            results[i].droprightOfDropdown = results[i].droprightOfDropdown.split(",");
+
+async function navBar() {
+    try {
+        var dropdownResults = await db.promise().query("SELECT * FROM menudropdown");
+        dropdownResults = dropdownResults[0];
+        await parseArray(dropdownResults);
+    }
+    catch (e) {
+        console.log(e);
+        dropdownResults = 0;
+    }
+    return dropdownResults;
+}
+function parseArray(dropdownResults) {
+    for (var i = 0; i < dropdownResults.length; i++) {
+        if (dropdownResults[i].droprightOfDropdown != '') {
+            dropdownResults[i].droprightOfDropdown = dropdownResults[i].droprightOfDropdown.split(",");
         }
     }
 }

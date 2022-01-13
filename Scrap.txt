@@ -124,3 +124,9 @@ app.get('/createdb', (req, res) => {
     droprightOfDropdown
 )
 VALUES("Meals",4,"Beef Burgeers,Chicken Burgers,Wraps,Diet Options,Seafood,Kids Meal"),("Sandwiches",4,"Beef Burgeers,Chicken Burgers,Wraps,Seafood"),("Sides",0,null),("Drinks",4,"Special Juices,Freshness Juices,Mix Fruits Juices,Healthy Juices,Milkshakes"),("Ice Cream",0,null);
+
+SELECT * FROM menudropdown
+DELETE FROM menudropdown
+SET SQL_SAFE_UPDATES = 0;
+
+INSERT INTO `menudropdown`(`sectionName`, `numberOfDropright,`, `droprightOfDropdown`) VALUES ("Meals",4,"Beef Burgeers,Chicken Burgers,Wraps,Diet Options,Seafood,Kids Meal"),("Sandwiches",4,"Beef Burgeers,Chicken Burgers,Wraps,Seafood"),("Sides",0,null),("Drinks",4,"Special Juices,Freshness Juices,Mix Fruits Juices,Healthy Juices,Milkshakes"),("Ice Cream",0,null)
