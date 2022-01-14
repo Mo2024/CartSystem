@@ -70,9 +70,20 @@
         </ul>
 
         <div class="form-inline my-2 my-lg-0">
+            <% let loggedIn  %>
+            <% if(loggedIn){%>
+            <button onclick="location.href = '/profile';" class=" btn mr-sm-2 my-2 my-sm-0 bold text-dark border-dark"
+                type="submit"> <b> Profile</b>
+                </i></button>
+            <% } else{ %>
             <button onclick="location.href = '/login';"
                 class=" login btn mr-sm-2 my-2 my-sm-0 text-dark border border-dark" type="submit">Log
                 In</i></button>
+            <button onclick="location.href = '/signup';"
+                class=" btn mr-sm-2 my-2 my-sm-0 text-warning bg-dark border border-dark" type="submit">Sign
+                Up</i></button>
+            <% } %>
+
         </div>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
