@@ -17,6 +17,8 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
+exports.db = db;
+
 db.connect((err) => {
     if (err) {
         throw err;
@@ -24,19 +26,8 @@ db.connect((err) => {
     console.log("Mysql connected...")
 })
 
-app.get('/', async (req, res) => {
-    let dropdownResults = await navBar();
-
-
-    res.render('home.ejs', { dropdownResults });
-});
-
-app.get('/login', async (req, res) => {
-    res.render('login.ejs');
-});
-app.get('/signup', async (req, res) => {
-    res.render('signup.ejs');
-});
+app.use('/', require('./routes/pages'))
+// app.use('/auth', require('./routes'))
 
 
 app.listen(3000, () => {
@@ -44,22 +35,3 @@ app.listen(3000, () => {
 
 });
 
-async function navBar() {
-    try {
-        var dropdownResults = await db.promise().query("SELECT * FROM menudropdown");
-        dropdownResults = dropdownResults[0];
-        await parseArray(dropdownResults);
-    }
-    catch (e) {
-        console.log(e);
-        dropdownResults = 0;
-    }
-    return dropdownResults;
-}
-function parseArray(dropdownResults) {
-    for (var i = 0; i < dropdownResults.length; i++) {
-        if (dropdownResults[i].droprightOfDropdown != '') {
-            dropdownResults[i].droprightOfDropdown = dropdownResults[i].droprightOfDropdown.split(",");
-        }
-    }
-}
