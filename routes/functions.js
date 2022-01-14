@@ -1,4 +1,7 @@
-const navBar = async function navBar() {
+const test = require('../index')
+const db = test.db;
+
+async function navBar() {
     try {
         var dropdownResults = await db.promise().query("SELECT * FROM menudropdown");
         dropdownResults = dropdownResults[0];
@@ -17,5 +20,6 @@ function parseArray(dropdownResults) {
         }
     }
 }
+
 
 exports.navBar = navBar;
