@@ -1,18 +1,14 @@
 <%- include('partials/head')%>
 
-<link rel="stylesheet" href="css/signup.css">
+<link rel="stylesheet" href="/css/signup.css">
 
 <body>
 
     <div id="" class="modal">
-        <% let message = ''; %>
 
-        <% if (message !== ''){ %>
-        <h4 class="alert"> <%= message %> </h4>
-        <% } else{%>
-        <h4>rip</h4>
+        <% if (typeof message !== 'undefined'){ %>
+        <h4 class=""> <%= message %> </h4>
         <% } %>
-
 
         <form class="modal-content" action="/auth/register" method="POST">
             <div class="container">
