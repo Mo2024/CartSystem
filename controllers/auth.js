@@ -12,7 +12,7 @@ var nameRegex = new RegExp("^([^0-9]*)$")
 exports.register = (req, res) => {
     // console.log(req.body);
 
-    const { name, username, email, password, cfmPassword, number } = req.body
+    const { name, username, email, password, cfmPassword, number, gender } = req.body
 
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, result) => {
         if (error) { console.log(error) };
@@ -61,7 +61,7 @@ exports.register = (req, res) => {
         let hashedPassword = await bcrypt.hash(password, 8);
         console.log(hashedPassword)
 
-        db.query("INSERT INTO users SET ?", { name: name, username: username, email: email, password: hashedPassword }, (err, results) => {
+        db.query("INSERT INTO users SET ?", { name: name, username: username, email: email, password: hashedPassword, number: number, gender: gender }, (err, results) => {
             if (err) throw err;
             console.log(results)
             return res.render('signup.ejs', {
