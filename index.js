@@ -10,6 +10,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.join(__dirname, '/static')))
 
+// Makes sure data can be grabbed from any form
+app.use(express.urlencoded({ extended: false }))
+// Makes incoming data as JSON
+app.use(express.json());
+
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -26,8 +31,9 @@ db.connect((err) => {
     console.log("Mysql connected...")
 })
 
+// Requires route through import/export
 app.use('/', require('./routes/pages'))
-// app.use('/auth', require('./routes'))
+app.use('/auth', require('./routes/auth'))
 
 
 app.listen(3000, () => {
