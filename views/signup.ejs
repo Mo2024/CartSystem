@@ -8,6 +8,12 @@
 
         <% if (typeof message !== 'undefined'){ %>
         <h4 class=""> <%= message %> </h4>
+        <% if (typeof req1 !== 'undefined'){ %>
+        <ul>
+            <h5><%= req1 %> </h5>
+            <h5><%= req2 %> </h5>
+        </ul>
+        <% } %>
         <% } %>
 
         <form class="modal-content" action="/auth/register" method="POST">
@@ -29,6 +35,10 @@
 
                 <label for="psw-repeat"><b>Repeat Password</b></label>
                 <input type="password" placeholder="Repeat Password" id="password-repeat" name="cfmPassword" required>
+
+
+                <label for="number"><b>Phone Number</b></label>
+                <input type="text" placeholder="Phone Number" id="number" name="number" required> <br>
 
                 <label for="gender"><b>Gender</b></label><br>
 
