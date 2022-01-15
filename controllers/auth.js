@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const modules = require('./modules')
 const { promisify } = require('util');
-const { createAccessToken, createRefreshToken } = require('./tokens')
+const { createAccessToken, createRefreshToken, sendAccessToken, sendRefreshToken } = require('./tokens')
 
 
 // Register user
@@ -82,18 +82,28 @@ exports.login = async (req, res) => {
         }
 
         db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, email], async (error, results) => {
+            console.log()
             if (typeof results == 'undefined' || !results || results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
                 return res.status(401).render('login.ejs', {
                     message: 'Email or Password is incorrect'
                 })
             } else {
                 const userId = results[0].id;
-                const acesstoken = createAccessToken(userId);
+                const accesstoken = createAccessToken(userId);
                 const refreshtoken = createRefreshToken(userId);
+
+                db.query("UPDATE users SET refreshtoken = ? WHERE email = ? OR username = ?", [refreshtoken, email, email], (err, results) => {
+                    if (err) throw err;
+                    // Should include login successful or somthn soon
+                    console.log("Success");
+                });
+                sendRefreshToken(res, refreshtoken);
+                sendAccessToken(res, req, accesstoken);
+
             }
 
         })
     } catch (err) {
-
+        throw err;
     }
 }
