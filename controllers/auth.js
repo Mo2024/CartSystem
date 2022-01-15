@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const modules = require('./modules')
 const { promisify } = require('util');
-const res = require("express/lib/response");
+const { createAccessToken, createRefreshToken } = require('./tokens')
 
 
 // Register user
@@ -87,23 +87,9 @@ exports.login = async (req, res) => {
                     message: 'Email or Password is incorrect'
                 })
             } else {
-                const id = results[0].id;
-
-                const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRES_IN
-                });
-
-                console.log("The token is: " + token);
-
-                const cookieOptions = {
-                    expires: new Date(
-                        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-                    ),
-                    httpOnly: true
-                }
-
-                res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/");
+                const userId = results[0].id;
+                const acesstoken = createAccessToken(userId);
+                const refreshtoken = createRefreshToken(userId);
             }
 
         })
