@@ -1,11 +1,12 @@
 const express = require("express");
 const functions = require('./functions')
+const authController = require('../controllers/auth');
+
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    let dropdownResults = await functions.navBar();
+router.get('/', authController.isLoggedIn, async (req, res) => {
 
-    res.render('home.ejs', { dropdownResults });
+    res.render('home.ejs', { dropdownResults: await functions.navBar(), user: req.user });
 });
 
 router.get('/login', (req, res) => {

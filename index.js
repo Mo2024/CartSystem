@@ -3,6 +3,7 @@ const mysql = require('mysql2')
 const path = require("path");
 const dotenv = require('dotenv');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 
 dotenv.config({ path: './.env' })
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, '/static')))
 app.use(express.urlencoded({ extended: false }))
 // Makes incoming data as JSON
 app.use(express.json());
+app.use(cookieParser());
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
