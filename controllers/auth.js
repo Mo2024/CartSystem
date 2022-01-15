@@ -3,9 +3,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const modules = require('./modules')
 const { promisify } = require('util');
+const res = require("express/lib/response");
 
 
-
+// Register user
 exports.register = (req, res) => {
 
     const { name, username, email, password, cfmPassword, number, gender } = req.body
@@ -66,4 +67,47 @@ exports.register = (req, res) => {
         });
     })
 
+}
+
+// Login user
+exports.login = async (req, res) => {
+    try {
+
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).render('login.ejs', {
+                message: 'Please provide an email & password'
+            })
+        }
+
+        db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, email], async (error, results) => {
+            if (typeof results == 'undefined' || !results || results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
+                return res.status(401).render('login.ejs', {
+                    message: 'Email or Password is incorrect'
+                })
+            } else {
+                const id = results[0].id;
+
+                const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRES_IN
+                });
+
+                console.log("The token is: " + token);
+
+                const cookieOptions = {
+                    expires: new Date(
+                        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                    ),
+                    httpOnly: true
+                }
+
+                res.cookie('jwt', token, cookieOptions);
+                res.status(200).redirect("/");
+            }
+
+        })
+    } catch (err) {
+
+    }
 }
