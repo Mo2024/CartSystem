@@ -1,46 +1,6 @@
 <%- include('partials/head')%>
 
 <body>
-
-    <% if (typeof message !== 'undefined'){ %>
-
-    <div id="registerAlert" class="h-100 d-flex justify-content-center align-items-center modal" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Alert</h5>
-
-                </div>
-                <div class="text-center modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button onclick="closeAlert()" type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        body {
-            overflow: hidden;
-        }
-
-        .modal {
-            background-color: rgba(63, 63, 63, 0.548);
-
-        }
-
-        .modal-header,
-        .modal-footer {
-            border-color: transparent;
-
-        }
-    </style>
-    <% } %>
-
-
     <%- include('partials/navbar')%>
     <div class="carouselColor">
         <div id="carouselExampleControls" class="container carousel slide" data-ride="carousel">
@@ -82,52 +42,8 @@
         </div>
     </div>
 
-    <!-- MENU -->
-    <div class="container pt-1">
-        <!-- HEADER NAME -->
-        <div class="card-header bg-warning  ">
-            <h4 class="my-0 font-weight-normal">SPECIAL OFFERS</h4>
-        </div>
-
-        <div class="row  ">
-
-            <% for (var i = 0; i < 8; i++) { %>
-
-            <!-- PRODUCT START -->
-            <div class="pt-3 col-md-6 col-lg-4 col-xl-3 space">
-                <div class="card-body card ">
-                    <img class="foodImg " src="icons/menu/Beef Burger Meal/Beef%20Burger%20Meal.png" alt="">
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <h3>Beef Burger Meal</h3>
-                        <h5>Price:</h5>
-                        <h6>BD 1.900</h6>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline add2CartBtn">Add to cart</button>
-                </div>
-            </div>
-            <% } %>
-
-
-        </div>
-    </div>
-
-
-
-
-
-    <div class="center" style="background-color: aqua;"></div>
-
 
     <%- include('partials/footer')%>
 </body>
-<style>
-    .space {
-        /* min-width: 220px;
-        padding: 0rem !important; */
-        /* margin: 0 10px 10px 10px; */
-        /* margin: 0 0.05rem 0; */
-        padding: 0 .5rem 0;
-    }
-</style>
 
 </html>

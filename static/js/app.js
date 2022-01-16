@@ -9,4 +9,7 @@ function hideDropDown(x) {
     document.getElementById(x).style.display = "none";
 }
 
-
+function closeAlert() {
+    document.getElementById("registerAlert").style.setProperty('display', 'none', 'important');
+    document.getElementsByTagName('body')[0].style.overflow = 'visible';
+}

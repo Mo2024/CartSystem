@@ -1,12 +1,14 @@
 const express = require("express");
 const functions = require('./functions')
 const authController = require('../controllers/auth');
-
 const router = express.Router();
 
 router.get('/', authController.isLoggedIn, async (req, res) => {
 
-    res.render('home.ejs', { dropdownResults: await functions.navBar(), user: req.user });
+    res.render('home.ejs', {
+        dropdownResults: await functions.navBar(),
+        user: req.user
+    });
 });
 
 router.get('/login', (req, res) => {
@@ -17,6 +19,17 @@ router.get('/signup', (req, res) => {
     res.render('signup.ejs');
 });
 
+router.get('/profile', authController.isLoggedIn, async (req, res) => {
+    if (req.user) {
+        res.render('profile/mainProfile.ejs', {
+            dropdownResults: await functions.navBar(),
+            user: req.user
+        });
+    } else {
+        res.redirect('/login');
+    }
+
+});
 
 
 module.exports = router;

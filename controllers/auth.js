@@ -9,6 +9,7 @@ const { isAuth } = require('./isAuth')
 // Register user
 exports.register = (req, res) => {
 
+    const reg = true;
     const { name, username, email, password, cfmPassword, number, gender } = req.body
 
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, result) => {
@@ -59,9 +60,7 @@ exports.register = (req, res) => {
 
         db.query("INSERT INTO users SET ?", { name: name, username: username, email: email, password: hashedPassword, number: number, gender: gender }, (err, results) => {
             if (err) throw err;
-            return res.render('signup.ejs', {
-                message: "User registered"
-            });
+            loginProcess(email, password, res);
         });
     })
 
@@ -78,43 +77,8 @@ exports.login = async (req, res) => {
                 message: 'Please provide an email & password'
             })
         }
+        loginProcess(email, password, res);
 
-        db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, email], async (error, results) => {
-            // console.log()
-            if (typeof results == 'undefined' || !results || results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
-                return res.status(401).render('login.ejs', {
-                    message: 'Email or Password is incorrect'
-                })
-            } else {
-                const id = results[0].id;
-                // const accesstoken = createAccessToken(id);
-                // const refreshtoken = createRefreshToken(id);
-
-                // db.query("UPDATE users SET refreshtoken = ? WHERE email = ? OR username = ?", [refreshtoken, email, email], (err, results) => {
-                //     if (err) throw err;
-                //     // Should include login successful or somthn soon
-                //     console.log("Success");
-                //     // console.log(req)
-                // });
-                // sendRefreshToken(res, refreshtoken);
-                // sendAccessToken(res, req, accesstoken);
-                const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRES_IN
-                });
-
-                const cookieOptions = {
-                    expires: new Date(
-                        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-                    ),
-                    httpOnly: true
-                }
-
-                res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/");
-
-            }
-
-        })
     }
     catch (err) {
         throw err;
@@ -182,3 +146,49 @@ exports.logout = async (req, res) => {
 
 //     }
 // }
+
+function loginProcess(email, password, res, reg = false) {
+
+    db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, email], async (error, results) => {
+        // console.log()
+        if (typeof results == 'undefined' || !results || results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
+            return res.status(401).render('login.ejs', {
+                message: 'Email or Password is incorrect'
+            })
+        } else {
+            const id = results[0].id;
+            // const accesstoken = createAccessToken(id);
+            // const refreshtoken = createRefreshToken(id);
+
+            // db.query("UPDATE users SET refreshtoken = ? WHERE email = ? OR username = ?", [refreshtoken, email, email], (err, results) => {
+            //     if (err) throw err;
+            //     // Should include login successful or somthn soon
+            //     console.log("Success");
+            //     // console.log(req)
+            // });
+            // sendRefreshToken(res, refreshtoken);
+            // sendAccessToken(res, req, accesstoken);
+            const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+                expiresIn: process.env.JWT_EXPIRES_IN
+            });
+
+            const cookieOptions = {
+                expires: new Date(
+                    Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                ),
+                httpOnly: true
+            }
+
+            res.cookie('jwt', token, cookieOptions);
+            res.status(200).redirect("/");
+            if (reg) {
+                return res.render('home.ejs', {
+                    message: "User registered!"
+                });
+            }
+
+        }
+
+    })
+
+}
