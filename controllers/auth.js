@@ -12,7 +12,7 @@ exports.register = (req, res) => {
     const { name, username, email, password, cfmPassword, number, gender } = req.body
 
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, result) => {
-        if (error) { console.log(error) };
+        if (error) { throw error };
 
         if (!modules.nameRegex.test(name)) {
             return res.render('signup.ejs', {
@@ -56,11 +56,9 @@ exports.register = (req, res) => {
             });
         }
         let hashedPassword = await bcrypt.hash(password, 8);
-        console.log(hashedPassword)
 
         db.query("INSERT INTO users SET ?", { name: name, username: username, email: email, password: hashedPassword, number: number, gender: gender }, (err, results) => {
             if (err) throw err;
-            console.log(results)
             return res.render('signup.ejs', {
                 message: "User registered"
             });
@@ -104,8 +102,6 @@ exports.login = async (req, res) => {
                     expiresIn: process.env.JWT_EXPIRES_IN
                 });
 
-                console.log("The token is: " + token);
-
                 const cookieOptions = {
                     expires: new Date(
                         Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
@@ -126,7 +122,6 @@ exports.login = async (req, res) => {
 }
 
 exports.isLoggedIn = async (req, res, next) => {
-    // console.log(req.cookies);
     if (typeof req.cookies.jwt !== 'undefined') {
         try {
             //1) verify the token
@@ -134,24 +129,18 @@ exports.isLoggedIn = async (req, res, next) => {
                 process.env.JWT_SECRET
             );
 
-            console.log(decoded);
-
             //2) Check if the user still exists
             db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
-                console.log(result);
 
                 if (!result) {
                     return next();
                 }
 
                 req.user = result[0];
-                console.log("user is")
-                console.log(req.user);
                 return next();
 
             });
         } catch (error) {
-            console.log(error);
             return next();
         }
     } else {
