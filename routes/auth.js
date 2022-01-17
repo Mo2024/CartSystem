@@ -15,8 +15,6 @@ router.post('/close', async (req, res) => {
 
 });
 
-// router.post('/', authController.close);
-
 // router.post('/protected', authController.protected);
 
 module.exports = router;

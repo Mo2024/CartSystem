@@ -9,7 +9,7 @@ var nameRegex = new RegExp("^([^0-9]*)$");
 
 
 
-function loginProcess(email, password, res, req, reg = false) {
+function loginProcess(email, password, res, reg = false) {
 
     db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, email], async (error, results) => {
         // console.log()
@@ -40,24 +40,16 @@ function loginProcess(email, password, res, req, reg = false) {
                 ),
                 httpOnly: true
             }
-            const registeredCookie = {
-                expires: new Date(new Date().getTime() + 5 * 60000),
-                httpOnly: true
+            if (reg) {
+                const registeredCookie = {
+                    expires: new Date(new Date().getTime() + 5 * 60000),
+                    httpOnly: true
+                }
+                res.cookie('register', "User registered!", registeredCookie)
             }
-            res.cookie('register', "User registered!", registeredCookie)
+
             res.cookie('jwt', token, cookieOptions);
             return res.status(200).redirect("/");
-            // console.log(req.cookies.jwt)
-
-            // if (reg) {
-            //     return res.render('home.ejs', {
-            //         message: "User registered!",
-            //         dropdownResults: await functions.navBar(),
-            //         user: req.user
-
-            //     });
-            // }
-
 
         }
 
