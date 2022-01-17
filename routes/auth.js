@@ -9,6 +9,14 @@ router.post('/login', authController.login);
 
 router.get('/logout', authController.logout);
 
+router.post('/close', async (req, res) => {
+    res.clearCookie("register");
+    return res.status(200).redirect("/");
+
+});
+
+// router.post('/', authController.close);
+
 // router.post('/protected', authController.protected);
 
 module.exports = router;

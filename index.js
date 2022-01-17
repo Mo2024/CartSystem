@@ -4,6 +4,8 @@ const path = require("path");
 const dotenv = require('dotenv');
 const app = express();
 const cookieParser = require('cookie-parser');
+// const functions = require('./routes/functions')
+
 
 
 dotenv.config({ path: './.env' })
@@ -18,6 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const db = mysql.createConnection({
+    multipleStatements: true,
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
@@ -36,6 +39,7 @@ db.connect((err) => {
 // Requires route through import/export
 app.use('/', require('./routes/pages'))
 app.use('/auth', require('./routes/auth'))
+
 
 
 app.listen(3000, () => {

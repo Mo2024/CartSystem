@@ -2,26 +2,28 @@
 
 <body>
 
+
     <% if (typeof message !== 'undefined'){ %>
+    <form action="/auth/close" method="POST">
+        <div id="registerAlert" class="h-100 d-flex justify-content-center align-items-center modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Alert</h5>
 
-    <div id="registerAlert" class="h-100 d-flex justify-content-center align-items-center modal" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Alert</h5>
-
-                </div>
-                <div class="text-center modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button onclick="closeAlert()" type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="text-center modal-body">
+                        <p>User registered!</p>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="closeAlert()" type="submit" class="btn btn-secondary"
+                            data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
     <style>
         body {
             overflow: hidden;
@@ -47,27 +49,27 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row">
-                        <div class="col-4"><img src="icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
-                        <div class="col-4"><img src="icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
+                        <div class="col-4"><img src="/icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
+                        <div class="col-4"><img src="/icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
                         </div>
-                        <div class="col-4"><img src="icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
+                        <div class="col-4"><img src="/icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="row">
-                        <div class="col-4"><img src="icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
+                        <div class="col-4"><img src="/icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
                         </div>
-                        <div class="col-4"><img src="icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
-                        <div class="col-4"><img src="icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
+                        <div class="col-4"><img src="/icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
+                        <div class="col-4"><img src="/icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="row">
-                        <div class="col-4"><img src="icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
-                        <div class="col-4"><img src="icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
+                        <div class="col-4"><img src="/icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
+                        <div class="col-4"><img src="/icons/slider/DoubleChickenMeal.jpg" class="d-block w-100">
                         </div>
-                        <div class="col-4"><img src="icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
+                        <div class="col-4"><img src="/icons/slider/CheeseDip.jpg" class="d-block w-100"></div>
                     </div>
                 </div>
             </div>
@@ -96,7 +98,7 @@
             <!-- PRODUCT START -->
             <div class="pt-3 col-md-6 col-lg-4 col-xl-3 space">
                 <div class="card-body card ">
-                    <img class="foodImg " src="icons/menu/Beef Burger Meal/Beef%20Burger%20Meal.png" alt="">
+                    <img class="foodImg " src="/icons/menu/Beef Burger Meal/Beef%20Burger%20Meal.png" alt="">
                     <ul class="list-unstyled mt-3 mb-4">
                         <h3>Beef Burger Meal</h3>
                         <h5>Price:</h5>
@@ -110,12 +112,6 @@
 
         </div>
     </div>
-
-
-
-
-
-    <div class="center" style="background-color: aqua;"></div>
 
 
     <%- include('partials/footer')%>
