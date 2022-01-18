@@ -3,7 +3,6 @@ const functions = require('./functions')
 const authController = require('../controllers/auth');
 const router = express.Router();
 
-// SET THE COOKIE VALUE HERE AND THEN TINKER WITH THE APP.JS TO DLETE EON CLI KLSDJHFGJK,.DSFABGJL;KAFSNJLGK 
 router.get('/', authController.isLoggedIn, async (req, res) => {
     if (req.cookies.register) {
         res.clearCookie("register");
@@ -17,6 +16,7 @@ router.get('/', authController.isLoggedIn, async (req, res) => {
 
 });
 
+
 router.get('/login', (req, res) => {
     res.render('login.ejs');
 });
@@ -24,6 +24,10 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
     res.render('signup.ejs');
 });
+
+// router.get('/profile', authController.isLoggedIn, async (req, res) => {
+
+// });
 
 router.get('/profile', authController.isLoggedIn, async (req, res) => {
     if (req.user) {

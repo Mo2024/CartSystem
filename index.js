@@ -7,7 +7,6 @@ const helmet = require('helmet')
 
 const app = express();
 // Adds security
-app.use(helmet())
 
 dotenv.config({ path: './.env' })
 app.set('view engine', 'ejs');
@@ -40,6 +39,8 @@ db.connect((err) => {
 // Requires route through import/export
 app.use('/', require('./routes/pages'))
 app.use('/auth', require('./routes/auth'))
+
+app.use(helmet());
 
 
 
