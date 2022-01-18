@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
         <img style="border-radius: 8px;" src="/icons/logo.webp" width="30" height="30" alt="" loading="lazy">
     </a>
 
@@ -11,27 +11,20 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <!-- START -->
             <li class="nav-item dropdown" onmouseover="displayDropDown('dropdown-menu')"
                 onmouseout="hideDropDown('dropdown-menu')">
 
                 <% if (dropdownResults.length!==0 && dropdownResults.length!==undefined) {%>
-                <a id="menuClassCheck" class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown"
-                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a id="menuClassCheck" class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">
                     Menu
                 </a>
-                <% } else{%>
-                <a id="menuClassCheck" class="nav-link text-dark" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Menu
-                </a>
-                <% } %>
-
 
                 <div class="dropdown-menu bg-warning" id="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Menu</a>
+                    <a class="dropdown-item" href="/menu">Menu</a>
                     <% if(dropdownResults.length>0) {%>
                     <div class="dropdown-divider border-dark"></div>
                     <% } %>
@@ -43,28 +36,41 @@
                     <div class="btn-group dropright" onmouseover="displayDropDown('<%=idnum+i%>')"
                         onmouseout="hideDropDown('<%=idnum+i%>')">
                         <button type="button" class="btn dropdown-item dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                            aria-haspopup="true" aria-expanded="false"
+                            <% let href = dropdownResults[i].sectionName.replace(/\s+/g, '') %>
+                            onclick="location.href = '/<%= href %>';">
                             <%= dropdownResults[i].sectionName %>
-                        </button>
+                        </button> <br>
                         <!-- SUB DROPRIGHT -->
                         <div class="dropdown-menu bg-warning" id="<%=idnum+i%>">
                             <% for (var j = 0; j < dropdownResults[i].droprightOfDropdown.length; j++) { %>
-                            <a class="dropdown-item" href="#"><%= dropdownResults[i].droprightOfDropdown[j] %> </a>
+                            <a class="dropdown-item"
+                                href="<%= href %>/<%= dropdownResults[i].droprightOfDropdown[j].replace(/\s+/g, '') %>"><%= dropdownResults[i].droprightOfDropdown[j] %>
+                            </a>
                             <% } %>
                         </div>
                     </div>
                     <% } else { %>
-                    <a class="dropdown-item" href="#"> <%= dropdownResults[i].sectionName %></a>
+                    <a class="dropdown-item" href="<%= dropdownResults[i].sectionName.replace(/\s+/g, '') %>">
+                        <%= dropdownResults[i].sectionName %></a>
                     <% } %>
 
                     <% } %>
                     <!-- DROPDOWN END -->
                 </div>
 
+                <% } else{%>
+                <a id="menuClassCheck" class="nav-link text-dark" href="/menu" id="navbarDropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    Menu
+                </a>
+                <% } %>
+
+
             </li>
             <!-- END -->
             <li class="nav-item">
-                <a class="nav-link text-dark" href="#">Cart</a>
+                <a class="nav-link text-dark" href="/cart">Cart</a>
             </li>
 
         </ul>
