@@ -2,11 +2,11 @@ const express = require("express");
 const mysql = require('mysql2')
 const path = require("path");
 const dotenv = require('dotenv');
-const app = express();
 const cookieParser = require('cookie-parser');
-// const functions = require('./routes/functions')
+const helmet = require('helmet')
 
-
+const app = express();
+app.use(helmet())
 
 dotenv.config({ path: './.env' })
 app.set('view engine', 'ejs');
