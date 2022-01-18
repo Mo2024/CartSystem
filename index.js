@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet')
 
 const app = express();
+// Adds security
 app.use(helmet())
 
 dotenv.config({ path: './.env' })
