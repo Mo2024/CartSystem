@@ -15,7 +15,8 @@ async function navBar() {
 }
 function parseArray(dropdownResults) {
     for (var i = 0; i < dropdownResults.length; i++) {
-        if (dropdownResults[i].droprightOfDropdown != '') {
+        if (dropdownResults[i].droprightOfDropdown !== '' && dropdownResults[i].droprightOfDropdown) {
+            console.log(dropdownResults[i].droprightOfDropdown)
             dropdownResults[i].droprightOfDropdown = dropdownResults[i].droprightOfDropdown.split(",");
         }
     }
