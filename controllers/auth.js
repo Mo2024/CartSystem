@@ -91,33 +91,68 @@ exports.login = async (req, res) => {
         throw err;
     }
 }
+
+// const isAuth = req => {
+//     const authorization = req.header['authorization'];
+// }
 exports.isLoggedIn = async (req, res, next) => {
-    if (typeof req.cookies.jwt !== 'undefined') {
-        try {
-            //1) verify the token
-            const decoded = await promisify(jwt.verify)(req.cookies.jwt,
-                process.env.JWT_SECRET
-            );
+    // if (typeof req.cookies.jwt !== 'undefined') {
+    // try {
+    //     //1) verify the token
+    //     const decoded = await promisify(jwt.verify)(req.cookies.jwt,
+    //         process.env.JWT_SECRET
+    //     );
 
-            //2) Check if the user still exists
-            db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
+    //     //2) Check if the user still exists
+    //     db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
 
-                if (!result) {
-                    return next();
-                }
+    //         if (!result) {
+    //             return next();
+    //         }
 
-                req.user = result[0];
-                return next();
+    //         req.user = result[0];
+    //         return next();
 
-            });
-        } catch (error) {
-            return next();
-        }
-    } else {
-        next();
-    }
+    //     });
+    // } catch (error) {
+    //     return next();
+    // }
+
+
+    // } else {
+    //     next();
+    // }
+    // let token = req.headers["authorization"];
+    // if (typeof token == 'undefined') {
+    //     console.log(token)
+    //     return next();
+    // }
+    // token = token.split(" ")[1]; //Access token
+    // if (typeof req.cookies.jwt !== 'undefined') {
+
+    //     jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, async (err, user) => {
+
+    //         console.log(user)
+    //         if (user) {
+    //             // req.user = user;
+    //             console.log(user)
+    //             next();
+    //         } else if (err.message === "jwt expired") {
+    //             return res.json({
+    //                 success: false,
+    //                 message: "Access token expired"
+    //             });
+    //         } else {
+    //             console.log(err);
+    //             return res
+    //                 .status(403)
+    //                 .json({ err, message: "User not authenticated" });
+    //         }
+    //     });
+    // }
+    console.log("Test")
+    return next();
 }
-
 
 
 // Logout user

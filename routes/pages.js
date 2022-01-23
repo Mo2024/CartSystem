@@ -31,6 +31,7 @@ router.get('/signup', (req, res) => {
 
 router.get('/profile', authController.isLoggedIn, async (req, res) => {
     if (req.user) {
+        console.log(req.user)
         res.render('profile/mainProfile.ejs', {
             dropdownResults: await functions.navBar(),
             user: req.user
