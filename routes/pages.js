@@ -7,7 +7,6 @@ router.get('/', authController.isLoggedIn, async (req, res) => {
     if (req.cookies.register) {
         res.clearCookie("register");
     }
-    console.log(req.user)
     res.render('home.ejs', {
         dropdownResults: await functions.navBar(),
         user: req.user,

@@ -17,18 +17,6 @@ function loginProcess(email, password, res, reg = false) {
             })
         } else {
             const id = results[0].id;
-            const role = results[0].role
-            // const accesstoken = createAccessToken(id);
-            // const refreshtoken = createRefreshToken(id);
-
-            // db.query("UPDATE users SET refreshtoken = ? WHERE email = ? OR username = ?", [refreshtoken, email, email], (err, results) => {
-            //     if (err) throw err;
-            //     // Should include login successful or somthn soon
-            //     console.log("Success");
-            //     // console.log(req)
-            // });
-            // sendRefreshToken(res, refreshtoken);
-            // sendAccessToken(res, req, accesstoken);
             const token = jwt.sign({ id }, process.env.JWT_SECRET, {
                 expiresIn: process.env.JWT_EXPIRES_IN
             });

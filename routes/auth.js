@@ -7,6 +7,8 @@ router.post('/register', authController.register);
 
 router.post('/login', authController.login);
 
+// router.post('/test', authController.isLoggedIn); maybe async ofr is logged in maybe?
+
 router.get('/logout', authController.logout);
 
 router.post('/close', async (req, res) => {

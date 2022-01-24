@@ -130,10 +130,10 @@ exports.isLoggedIn = async (req, res, next) => {
     // token = token.split(" ")[1]; //Access token
     if (req.cookies.jwt) {
 
-        console.log("works")
         jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, async (err, user) => {
 
             console.log(user)
+            console.log(err)
             if (user) {
                 // req.user = user;
                 db.query('SELECT * FROM users WHERE id = ?', [user.id], (error, result) => {
