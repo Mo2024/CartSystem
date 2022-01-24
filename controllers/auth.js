@@ -128,30 +128,46 @@ exports.isLoggedIn = async (req, res, next) => {
     //     return next();
     // }
     // token = token.split(" ")[1]; //Access token
-    // if (typeof req.cookies.jwt !== 'undefined') {
+    if (req.cookies.jwt) {
 
-    //     jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, async (err, user) => {
+        console.log("works")
+        jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, async (err, user) => {
 
-    //         console.log(user)
-    //         if (user) {
-    //             // req.user = user;
-    //             console.log(user)
-    //             next();
-    //         } else if (err.message === "jwt expired") {
-    //             return res.json({
-    //                 success: false,
-    //                 message: "Access token expired"
-    //             });
-    //         } else {
-    //             console.log(err);
-    //             return res
-    //                 .status(403)
-    //                 .json({ err, message: "User not authenticated" });
-    //         }
-    //     });
-    // }
-    console.log("Test")
-    return next();
+            console.log(user)
+            if (user) {
+                // req.user = user;
+                db.query('SELECT * FROM users WHERE id = ?', [user.id], (error, result) => {
+
+                    if (!result) {
+                        return next();
+                    }
+                    const { id, username } = result[0]
+                    req.user = { id, username };
+                    return next();
+
+                });
+                // return next();
+            } else if (err.message === "jwt expired") {
+                return res.json({
+                    success: false,
+                    message: "Access token expired"
+                });
+            } else {
+                console.log(err);
+                return res
+                    .status(403)
+                    .json({ err, message: "User not authenticated" });
+            }
+        });
+    } else if (typeof req.cookies.ref !== 'undefined') {
+
+
+    }
+    else {
+        return next();
+    }
+    // console.log("Test")
+    // return next
 }
 
 

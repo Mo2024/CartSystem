@@ -8,7 +8,6 @@ var userRegex = new RegExp("^(?=[a-zA-Z0-9._]{4,20}$)(?!.*[_.]{2})[^_.].*[^_.]$"
 var nameRegex = new RegExp("^([^0-9]*)$");
 
 
-
 function loginProcess(email, password, res, reg = false) {
 
     db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, email], async (error, results) => {
@@ -18,6 +17,7 @@ function loginProcess(email, password, res, reg = false) {
             })
         } else {
             const id = results[0].id;
+            const role = results[0].role
             // const accesstoken = createAccessToken(id);
             // const refreshtoken = createRefreshToken(id);
 
