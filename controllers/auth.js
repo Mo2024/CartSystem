@@ -132,8 +132,6 @@ exports.isLoggedIn = async (req, res, next) => {
 
         jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, async (err, user) => {
 
-            console.log(user)
-            console.log(err)
             if (user) {
                 // req.user = user;
                 db.query('SELECT * FROM users WHERE id = ?', [user.id], (error, result) => {
@@ -147,20 +145,32 @@ exports.isLoggedIn = async (req, res, next) => {
 
                 });
                 // return next();
-            } else if (err.message === "jwt expired") {
-                return res.json({
-                    success: false,
-                    message: "Access token expired"
-                });
+            }
+            else if (err.message === "jwt expired") {
+                res.send("access token expired please refresh the page");
+                return next();
+
             } else {
-                console.log(err);
-                return res
-                    .status(403)
-                    .json({ err, message: "User not authenticated" });
+                res.status(403).json({ err, message: "User not authenticated" });
+                return next();
             }
         });
-    } else if (typeof req.cookies.ref !== 'undefined') {
+    } else if (req.cookies.ref) {
+        jwt.verify(req.cookies.ref, process.env.REFRESH_TOKEN_SECRET, async (err, refToken) => {
 
+            if (refToken) {
+                const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRES_IN
+                });
+                res.cookie('jwt', token, {
+                    expires: new Date(new Date().getTime() + 1 * 60000),
+                    httpOnly: true
+                });
+            } else {
+                res.send("Please log in");
+                return next();
+            }
+        });
 
     }
     else {
