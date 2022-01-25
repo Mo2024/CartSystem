@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const modules = require('./modules')
 const { promisify } = require('util');
-const { createAccessToken, createRefreshToken, sendAccessToken, sendRefreshToken } = require('./tokens')
+const { refreshToken, accessToken } = require('./tokens')
 const { isAuth } = require('./isAuth')
 
 // Register user
@@ -130,47 +130,11 @@ exports.isLoggedIn = async (req, res, next) => {
     // token = token.split(" ")[1]; //Access token
     if (req.cookies.jwt) {
 
-        jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, async (err, user) => {
+        accessToken(req, res, next)
 
-            if (user) {
-                // req.user = user;
-                db.query('SELECT * FROM users WHERE id = ?', [user.id], (error, result) => {
-
-                    if (!result) {
-                        return next();
-                    }
-                    const { id, username } = result[0]
-                    req.user = { id, username };
-                    return next();
-
-                });
-                // return next();
-            }
-            else if (err.message === "jwt expired") {
-                res.send("access token expired please refresh the page");
-                return next();
-
-            } else {
-                res.status(403).json({ err, message: "User not authenticated" });
-                return next();
-            }
-        });
     } else if (req.cookies.ref) {
-        jwt.verify(req.cookies.ref, process.env.REFRESH_TOKEN_SECRET, async (err, refToken) => {
 
-            if (refToken) {
-                const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRES_IN
-                });
-                res.cookie('jwt', token, {
-                    expires: new Date(new Date().getTime() + 1 * 60000),
-                    httpOnly: true
-                });
-            } else {
-                res.send("Please log in");
-                return next();
-            }
-        });
+        refreshToken(req, res, next)
 
     }
     else {
