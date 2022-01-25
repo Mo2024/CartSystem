@@ -1,7 +1,7 @@
 const { db } = require("..");
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { isLoggedIn } = require("./auth");
+const { createAccessToken, createRefreshToken } = require('./tokens')
+
 var onlyNumRegex = new RegExp('^[0-9]*$');
 var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
@@ -18,14 +18,6 @@ function loginProcess(email, password, res, reg = false) {
             })
         } else {
             const id = results[0].id;
-            const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-                expiresIn: process.env.JWT_EXPIRES_IN
-            });
-
-            const refreshtoken = jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: process.env.JWT_REFRESH_EXPIRES_IN
-            });
-
 
             if (reg) {
                 res.cookie('register', "User registered!", {
@@ -33,14 +25,8 @@ function loginProcess(email, password, res, reg = false) {
                     httpOnly: true
                 })
             }
-            res.cookie('jwt', token, {
-                expires: new Date(new Date().getTime() + 1 * 60000),
-                httpOnly: true
-            });
-            res.cookie('ref', refreshtoken, {
-                expires: new Date(new Date().getTime() + 10080 * 60000),
-                httpOnly: true
-            });
+            createAccessToken(res, id)
+            createRefreshToken(res, id)
 
             return res.status(200).redirect("/");
 
@@ -49,9 +35,6 @@ function loginProcess(email, password, res, reg = false) {
     })
 
 }
-
-
-
 
 module.exports = {
     onlyNumRegex,
