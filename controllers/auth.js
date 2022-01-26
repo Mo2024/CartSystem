@@ -156,12 +156,12 @@ exports.isLoggedIn = async (req, res, next) => {
 // }
 exports.logout = async (req, res) => {
     if (req.cookies.jwt) {
-        res.cookie('jwt', 'logout', {
+        await res.cookie('jwt', 'logout', {
             expires: new Date(Date.now() + 2 * 1000),
             httpOnly: true
         });
     }
-    res.cookie('ref', 'logout', {
+    await res.cookie('ref', 'logout', {
         expires: new Date(Date.now() + 2 * 1000),
         httpOnly: true
     });

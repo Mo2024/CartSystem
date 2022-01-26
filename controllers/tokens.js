@@ -33,13 +33,7 @@ function refreshToken(req, res, next) {
     jwt.verify(req.cookies.ref, process.env.REFRESH_TOKEN_SECRET, async (err, refToken) => {
         const id = refToken.id
         if (refToken) {
-            const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-                expiresIn: process.env.JWT_EXPIRES_IN
-            });
-            res.cookie('jwt', token, {
-                expires: new Date(new Date().getTime() + 1 * 60000),
-                httpOnly: true
-            });
+            createAccessToken(res, id)
             console.log("worked")
             accessToken(req, res, next)
             return next();
@@ -70,7 +64,7 @@ function accessToken(req, res, next) {
             // return next();
         }
         else if (err.message === "jwt expired") {
-            modules.refreshToken(req, res, next)
+            refreshToken(req, res, next)
         } else {
             res.status(403).json({ err, message: "User not authenticated" });
             return next();
@@ -79,7 +73,29 @@ function accessToken(req, res, next) {
 
 }
 
+function createAccessToken(res, id) {
+    const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN
+    });
+    res.cookie('jwt', token, {
+        expires: new Date(new Date().getTime() + 1 * 60000),
+        httpOnly: true
+    });
+}
+
+function createRefreshToken(res, id) {
+    const refreshtoken = jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.JWT_REFRESH_EXPIRES_IN
+    });
+    res.cookie('ref', refreshtoken, {
+        expires: new Date(new Date().getTime() + 10080 * 60000),
+        httpOnly: true
+    });
+}
+
 module.exports = {
     refreshToken,
-    accessToken
+    accessToken,
+    createAccessToken,
+    createRefreshToken
 }
